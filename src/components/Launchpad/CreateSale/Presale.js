@@ -19,19 +19,22 @@ import { Contract } from "ethers";
 import ERCAbi from "../../../config/abi/ERC20.json";
 import { approveTokens } from "utils/deploySale";
 import {
-  Public_FACTORYADRESS,
-  Private_FACTORYADRESS,
-  FairLaunch_FACTORYADRESS,
-  PublicErc_FACTORYADRESS,
-  PrivateErc_FACTORYADRESS,
+  BSC_PUBLIC_FACTORYADDRESS,
   FairLaunchErc_FACTORYADRESS,
+  FairLaunch_FACTORYADRESS,
+  PrivateErc_FACTORYADRESS,
+  Private_FACTORYADRESS,
+  PublicErc_FACTORYADRESS,
+  Public_FACTORYADRESS,
   USDT_ADDRESS,
   RBA_ADDRESS,
   USDC_ADDRESS,
-  BSC_PUBLIC_FACTORYADDRESS,
+  USDT_ADDRESS_BSC,
+  USDC_ADDRESS_BSC,
+  RBA_ADDRESS_BSC,
 } from "config/constants/LaunchpadAddress";
 
-const currencies = [
+const currencies1 = [
   {
     id: 1,
     name: "Binance",
@@ -61,6 +64,36 @@ const currencies = [
     address: USDT_ADDRESS,
   },
 ];
+const currencies2 = [
+  {
+    id: 1,
+    name: "Binance",
+    symbol: "BNB",
+    icon: "/images/cards/bnb.svg",
+    address: "",
+  },
+  {
+    id: 2,
+    name: "Roburna",
+    symbol: "RBA",
+    icon: "/images/cards/arb.svg",
+    address: RBA_ADDRESS_BSC,
+  },
+  {
+    id: 3,
+    name: "USD Coin",
+    symbol: "USDC",
+    icon: "/images/cards/gusd.svg",
+    address: USDC_ADDRESS_BSC,
+  },
+  {
+    id: 4,
+    name: "Tether",
+    symbol: "USDT",
+    icon: "/images/cards/usdt.svg",
+    address: USDT_ADDRESS_BSC,
+  },
+];
 
 const dexes = [
   {
@@ -76,6 +109,7 @@ const dexes = [
 export default function Presale({ setActive, saleType, setSaleObject, token }) {
   const { chainId } = useEthers();
   const [currencySelected, setCurrencySelected] = useState(1);
+  const [currencies, setCurrencies] = useState(currencies1);
   const [tempfixed, setTempFixed] = useState(true);
   const [dex, setDex] = useState(2);
   const [presalePrice, setPresalePrice] = useState();
@@ -102,13 +136,19 @@ export default function Presale({ setActive, saleType, setSaleObject, token }) {
   const [percent2, setPercent2] = useState(0);
   const [percent3, setPercent3] = useState(0);
   const [percent4, setPercent4] = useState(0);
-  // const [whiteListedDates, setWhiteListedDates] = useState([]);
 
   const { open: openLoadingModal, close: closeLoadingModal } =
     useModal("LoadingModal");
   const { open: openModal } = useModal("ConnectionModal");
   console.log(connected);
 
+  useEffect(() => {
+    if (chainId === 56) {
+      setCurrencies(currencies2);
+    } else {
+      setCurrencies(currencies1);
+    }
+  }, [chainId]);
 
   const handleAddressChange = (newValue) => {
     const addressesArray = newValue.split(',');
@@ -285,7 +325,6 @@ export default function Presale({ setActive, saleType, setSaleObject, token }) {
       owner: account,
       isFinished: false,
       whiteListedAddresses: whiteListedAddresses,
-      // whiteListedDates: whiteListedDates,
       percent1: percent1,
       percent2: percent2,
       percent3: percent3,
