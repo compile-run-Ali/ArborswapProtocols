@@ -21,6 +21,9 @@ import {
   PrivateErc_FACTORYADRESS,
   FairLaunchErc_FACTORYADRESS,
   BSC_PUBLIC_ERC_FACTORYADDRESS,
+  USDT_ADDRESS_BSC,
+  USDC_ADDRESS_BSC,
+  RBA_ADDRESS_BSC,
 } from "config/constants/LaunchpadAddress";
 import { parseEther, parseUnits } from "ethers/lib/utils";
 import { ethers, utils } from "ethers";
@@ -514,12 +517,13 @@ export const deployPublicSaleERCMainnet = async (
   const routerAddress = BSC_ROUTER_ADDRESS;
   const adminAddress = ADMIN_ADDRESS;
   let PaymentToken = "";
+
   if (saleObject.currency.name === "Tether") {
-    PaymentToken = USDT_ADDRESS;
+    PaymentToken = USDT_ADDRESS_BSC;
   } else if (saleObject.currency.name === "USD Coin") {
-    PaymentToken = USDC_ADDRESS;
+    PaymentToken = USDC_ADDRESS_BSC;
   } else if (saleObject.currency.name === "Roburna") {
-    PaymentToken = RBA_ADDRESS;
+    PaymentToken = RBA_ADDRESS_BSC;
   }
 
   // 2nd - with uints [minParticipation, maxParticipation, lp%, dex listing rate,lpLockPeriod, saleEnd, saleStart, hardCap(tokens), softCap(bnb)]
@@ -933,11 +937,11 @@ export const deployPrivateErcSaleMainnet = async (
   const routerAddress = BSC_ROUTER_ADDRESS;
   let PaymentToken = "";
   if (saleObject.currency.name === "Tether") {
-    PaymentToken = USDT_ADDRESS;
+    PaymentToken = USDT_ADDRESS_BSC;
   } else if (saleObject.currency.name === "Gnosis") {
-    PaymentToken = USDC_ADDRESS;
+    PaymentToken = USDC_ADDRESS_BSC;
   } else if (saleObject.currency.name === "Roburna") {
-    PaymentToken = RBA_ADDRESS;
+    PaymentToken = RBA_ADDRESS_BSC;
   }
 
   const saleId = await contract.getNumberOfSalesDeployed();
