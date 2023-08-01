@@ -79,6 +79,7 @@ export default function PoolPageBase({ pool, visible, showModal, admin,objId ,is
               lockup={pool.lockup}
               objId={objId}
               admin = {admin}
+              finished = {isFinished}
             />
           </div>
 

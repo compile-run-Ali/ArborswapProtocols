@@ -196,9 +196,44 @@ export default function AdminPanel({
     }
 
     //update the isFinised in database
+    const finalSaleObject = {
+      saleId: sale.saleId,
+      saleAddress: sale.saleAddress,
+      saleType: sale.type,
+      github: sale.github,
+      website: sale.website,
+      twitter: sale.twitter,
+      linkedin: sale.linkedin,
+      discord: sale.discord,
+      telegram: sale.telegram,
+      youtube: sale.youtube,
+      image: sale.image,
+      name: sale.name,
+      description: sale.description,
+      tags: sale.tags,
+      token: sale.token,
+      minAllocation: sale.minAllocation,
+      maxAllocation: sale.maxAllocation,
+      amountLiquidity: sale.amountLiquidity,
+      listing: sale.listing,
+      lockup: sale.lockup,
+      presalePrice: sale.presalePrice,
+      endDate: Math.floor(Date.now() / 1000),
+      startDate: sale.startDate,
+      hardCap: sale.hardCap,
+      softCap: sale.softCap,
+      unsoldToken: sale.unsoldToken,
+      currency: sale.currency,
+      dex: sale.dex,
+      whiteisting: sale.whiteisting,
+      whiteListedAddresses: sale.whiteListedAddresses,
+      owner: sale.owner,
+      isFinished: sale.isFinished,
+    }      
     try {
       const res = await axios.put(`${BACKEND_URL}/api/sale/${objId}`, {
         isFinished: "true",
+        sale: finalSaleObject,
       });
       toast.success("Sale Finalized Successfully");
       // window.location.reload();

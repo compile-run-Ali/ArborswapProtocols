@@ -4,6 +4,7 @@ import PrivateSaleErcAbi from "config/abi/PrivateSaleErcAbi.json";
 import Web3 from "web3";
 
 async function getSaleInfo(saleAddress,saleType="standard",currency="BNB") {
+  console.log(saleAddress,saleType,currency,"in get sale info")
   try {
     const web3 = new Web3(window.ethereum);
     await window.ethereum.enable();

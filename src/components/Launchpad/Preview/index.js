@@ -39,6 +39,7 @@ export default function Preview({
   lockup,
   objId,
   admin,
+  finished,
 }) {
   const { theme } = useContext(ThemeContext);
   const [slide, setSlide] = useState("Presale");
@@ -177,7 +178,7 @@ export default function Preview({
                   .replace(" GMT", " UTC")}
               />
               <PreviewDetails
-                name={"Presale Ends on"}
+                name={!finished? "Presale Ends on" : "Presale Ended on"}
                 value={new Date(ends_on * 1000)
                   .toUTCString()
                   .replace(" GMT", " UTC")}
