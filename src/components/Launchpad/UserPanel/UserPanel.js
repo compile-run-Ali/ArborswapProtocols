@@ -156,7 +156,7 @@ export default function SaleBox({ icon, sale, status, isFinished, isCancelled })
           name={"My Reserved Tokens"}
           value={bought + " " + sale.token.tokenSymbol}
         />
-
+      {isFinished && (
         <div className="flex flex-col items-center">
           <span className="font-medium text-gray dark:text-gray-dark text-sm mt-5">
             {tokensWithdrawn?"You claimed":"Available to Claim"}
@@ -169,6 +169,7 @@ export default function SaleBox({ icon, sale, status, isFinished, isCancelled })
             </span>
           </div>
         </div>
+      )}
         {(status === "Ended" && isFinished) && (
           <div className="mt-7">
             <button

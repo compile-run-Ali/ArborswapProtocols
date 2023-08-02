@@ -150,6 +150,7 @@ export default function PreviewSale({
       if (saleObject.currency.name === "Binance") {
         console.log( "private sale", "binance")
         if(chainId === 97) {
+          console.log(chainId, "chainId")
         finalSaleObject = await deployPrivateSale(
           token,
           saleObject,
@@ -162,6 +163,7 @@ export default function PreviewSale({
         );
         }
         else {
+          console.log(chainId, "chainId")
           finalSaleObject = await deployPrivateSaleMainnet(
             token,
             saleObject,

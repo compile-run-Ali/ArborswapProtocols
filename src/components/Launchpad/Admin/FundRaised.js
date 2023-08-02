@@ -102,11 +102,18 @@ export default function FundRaised({ icon, pool, status, sale, isFinished }) {
     }
   };
   async function getInfo() {
-    const result = await getSaleInfo(pool.saleAddress,pool.saleType);
+    const result = await getSaleInfo(pool.saleAddress,pool.saleType,sale.currency.symbol);
     setSaleInfo(result);
-    console.log(result.totalBNBRaised, "FundRaised");
-    const raised = BigNumber.from(result.totalBNBRaised);
-    const percents = raised.mul(100).div(result.hardCap);
+    let tokensRaised;
+    if (sale.saleType === "standard"||sale.currency.symbol === "BNB") {
+      tokensRaised = BigNumber.from(result.totalBNBRaised);
+      console.log(tokensRaised,"tokensRaised")
+    }
+    else {
+      tokensRaised = BigNumber.from(result.totalERC20Raised);
+      console.log(tokensRaised,"tokensRaised")
+    }
+    const percents = tokensRaised.mul(100).div(result.hardCap);
     const newPercent = formatBigToNum(percents.toString(), 0, 1);
     setRaised(newPercent);
   }
@@ -126,7 +133,7 @@ export default function FundRaised({ icon, pool, status, sale, isFinished }) {
         <img src={icon} alt="pool-icon" className="w-7 h-7 mr-2" />
         <div className="flex items-end">
           <span className="font-bold text-dark-text dark:text-light-text text-2xl">
-            {parseFloat((sale.hardCap * (Raised / 100)))}
+            {parseFloat((sale.hardCap * (Raised / 100)))} {sale.currency.symbol}
           </span>
           {earningsWithdrawn ? (
             <span className="text-gray dark:text-gray-dark ml-2"> (Claimed)</span>

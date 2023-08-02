@@ -439,7 +439,7 @@ export default function Modal({
           <div className="mt-[10px]  rounded-md bg-[#F5F1EB] dark:bg-dark-3 px-5 py-5">
             <div className="flex justify-between items-center">
               <span className="font-bold text-xl text-dark-text dark:text-light-text">
-                {tokenAmount}
+                {parseFloat(tokenAmount)}
               </span>
               <span className="text-sm font-medium text-gray dark:text-gray-dark">
                 ~ $---

@@ -22,7 +22,7 @@ export default function PercentFilled({ address, setFilled = () => {}, item, sho
   async function getPrice() {
     if (!saleInfo) return;
     let res
-    if(sale.saleType === "standard"){
+    if(sale.saleType === "standard"||sale.currency.symbol === "BNB"){
     res = await saleInfo.totalBNBRaised;
     }
     else if(sale.saleType === "private"){
