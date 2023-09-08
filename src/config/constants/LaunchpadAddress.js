@@ -1,4 +1,4 @@
-const BACKEND_URL = "http://3.91.222.195"
+const BACKEND_URL = "https://protocol-api.arborswap.org"
 
 
 const FairLaunch_FACTORYADRESS = "0xAcBC8c09595a4658953C396a4A69F50fc0363e25"
