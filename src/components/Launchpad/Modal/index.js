@@ -211,8 +211,11 @@ export default function Modal({
     //user balanceBNB
     //check if sale started
     bought = await getAmountParticipated(sale.saleAddress,acct,sale.saleType);
-    const userAllocation = formatBigToNum(bought[0].toString(), 18, 4);
+    console.log("bought", bought)
+    const userAllocation = formatBigToNum(bought[0].toString(), 19, 4);
+
     if (userAllocation >= sale.maxAllocation) {
+      console.log("userAllocation", userAllocation, "sale.maxAllocation", sale.maxAllocation)
       toast.error("You have reached the maximum allocation");
       return;
     }
