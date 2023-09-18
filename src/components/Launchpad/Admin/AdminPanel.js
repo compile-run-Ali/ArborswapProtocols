@@ -21,7 +21,8 @@ import Web3 from "web3";
 import getSaleInfo from "utils/getSaleInfo";
 import { getLiquidityLockList, getLpLockInfos } from "utils/getLockList";
 import { getLpInfo } from "utils/lpInfo";
-
+import { BigNumber } from "ethers";
+import { formatBigToNum } from "utils/numberFormat";
 export default function AdminPanel({
   status,
   hard_cap,
@@ -42,7 +43,6 @@ export default function AdminPanel({
   //LoadingModal
   const { open: openLoadingModal, close: closeLoadingModal } =
     useModal("LoadingModal");
-
   const getContributors = async () => {
     try {
       let abi;
@@ -199,7 +199,7 @@ export default function AdminPanel({
     const finalSaleObject = {
       saleId: sale.saleId,
       saleAddress: sale.saleAddress,
-      saleType: sale.type,
+      saleType: sale.saleType,
       github: sale.github,
       website: sale.website,
       twitter: sale.twitter,
@@ -230,6 +230,7 @@ export default function AdminPanel({
       owner: sale.owner,
       isFinished: sale.isFinished,
       chainID: sale.chainID,
+      filledPercent:"100"
     }      
     try {
       const res = await axios.put(`${BACKEND_URL}/api/sale/${objId}`, {
@@ -349,6 +350,20 @@ export default function AdminPanel({
           ...sale.whiteListedAddresses,
           ...whiteListedAddresses,
         ];
+        const saleInfo = await getSaleInfo(
+          sale.saleAddress,
+          sale.type,
+          sale.currency.symbol
+        );
+        let perc;
+        if (sale.saleType === "standard" || sale.currency.symbol === "BNB") {
+          perc = await saleInfo.totalBNBRaised;
+        } else if (sale.saleType === "private") {
+          perc = await saleInfo.totalERC20Raised;
+        }
+        perc = BigNumber.from(perc);
+        const percents = perc.mul(100).div(saleInfo.hardCap);
+        const filled = formatBigToNum(percents.toString(), 0, 1);
         const finalSaleObject = {
           saleId: sale.saleId,
           saleAddress: sale.saleAddress,
@@ -382,6 +397,7 @@ export default function AdminPanel({
           whiteListedAddresses: updatedAddresses,
           owner: sale.owner,
           isFinished: sale.isFinished,
+          filledPercent: filled,
         };
         const res = await axios.put(`${BACKEND_URL}/api/sale/${objId}`, {
           sale: finalSaleObject,

@@ -316,7 +316,7 @@ export default function Modal({
         const finalSaleObject = {
           saleId: sale.saleId,
           saleAddress: sale.saleAddress,
-          saleType: sale.type,
+          saleType: sale.saleType,
           github: sale.github,
           website: sale.website,
           twitter: sale.twitter,
